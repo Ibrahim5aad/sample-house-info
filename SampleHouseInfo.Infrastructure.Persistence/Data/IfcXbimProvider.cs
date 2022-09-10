@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using SampleHouseInfo.Application.Interfaces;
 using SampleHouseInfo.Domain.Settings;
-using Serilog;
+using SampleHouseInfo.Infrastructure.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,20 +10,22 @@ using System.Reflection;
 using Xbim.Common;
 using Xbim.Ifc;
 
-namespace SampleHouseInfo.Infrastructure.Persistence.Utilities;
+namespace SampleHouseInfo.Infrastructure.Persistence.Data;
 
 
 /// <summary>
-/// Class IfcFileUtility
+/// Class IfcXbimProvider
 /// </summary>
+/// <seealso cref="SampleHouseInfo.Infrastructure.Persistence.Interfaces.IIfcXbimProvider" />
+/// <seealso cref="SampleHouseInfo.Infrastructure.Persistence.Interfaces.IIfcProvider{Xbim.Common.IPersistEntity}" />
 /// <seealso cref="System.IDisposable" />
-internal class IfcFileReader : IDisposable
+internal class IfcXbimProvider : IIfcXbimProvider, IDisposable
 {
 
   #region Fields
 
   private AppSettings _settings;
-  private ILogger<IfcFileReader> _logger;
+  private ILogger<IfcXbimProvider> _logger;
   private IfcStore _store;
 
   #endregion
@@ -32,11 +33,11 @@ internal class IfcFileReader : IDisposable
   #region Constructor
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="IfcFileReader" /> class.
+  /// Initializes a new instance of the <see cref="IfcXbimProvider" /> class.
   /// </summary>
   /// <param name="options">The options.</param>
-  /// <param name="ILogger`1">The i logger`1.</param>
-  public IfcFileReader(IOptions<AppSettings> options, ILogger<IfcFileReader> logger)
+  /// <param name="logger">The logger.</param>
+  public IfcXbimProvider(IOptions<AppSettings> options, ILogger<IfcXbimProvider> logger)
   {
     _settings = options.Value;
     _logger = logger;
@@ -61,7 +62,6 @@ internal class IfcFileReader : IDisposable
                            _settings.IfcFilePath);
 
       _store = IfcStore.Open(fileName);
-
       _logger.LogInformation("IFC file loaded successfully.");
 
     }
@@ -71,14 +71,13 @@ internal class IfcFileReader : IDisposable
     }
 
   }
-    
 
   /// <summary>
   /// Gets all IFC element of type T.
   /// </summary>
   /// <typeparam name="T"> The type of the elements </typeparam>
   /// <returns></returns>
-  public IEnumerable<T> GetAll<T>()
+  public IEnumerable<T> GetAllOfType<T>()
                         where T : IPersistEntity
   {
     return _store.Instances.OfType<T>();
@@ -92,11 +91,11 @@ internal class IfcFileReader : IDisposable
   /// <typeparam name="TTarget">The type of the target elements.</typeparam>
   /// <param name="transformer">The transformer.</param>
   /// <returns></returns>
-  public IEnumerable<TTarget> GetAll<TSource, TTarget>(Func<TSource, TTarget> transformer)
+  public IEnumerable<TTarget> GetAllOfType<TSource, TTarget>(Func<TSource, TTarget> transformer)
                               where TSource : IPersistEntity
                               where TTarget : class
   {
-    return GetAll<TSource>()
+    return GetAllOfType<TSource>()
             .Select(transformer);
   }
 
@@ -108,6 +107,20 @@ internal class IfcFileReader : IDisposable
   public void Dispose()
   {
     _store.Close();
+  }
+
+
+  /// <summary>
+  /// Maps a collection of source elements to to a collection of target elements.
+  /// </summary>
+  /// <typeparam name="TSource">The type of the source.</typeparam>
+  /// <typeparam name="TTarget">The type of the target.</typeparam>
+  /// <param name="map">The mapping function.</param>
+  /// <returns></returns>
+  public IEnumerable<TTarget> Map<TSource, TTarget>(Func<IEnumerable<TSource>, IEnumerable<TTarget>> map)
+                              where TSource : IPersistEntity
+  {
+    return map.Invoke(GetAllOfType<TSource>());
   }
 
   #endregion

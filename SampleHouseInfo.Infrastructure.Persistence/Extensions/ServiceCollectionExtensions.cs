@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SampleHouseInfo.Application.Interfaces.Repositories;
+using SampleHouseInfo.Infrastructure.Persistence.Interfaces;
 using SampleHouseInfo.Infrastructure.Persistence.Repository;
-using SampleHouseInfo.Infrastructure.Persistence.Utilities;
+using SampleHouseInfo.Infrastructure.Persistence.Data;
+using SampleHouseInfo.Application.Interfaces;
+using SampleHouseInfo.Infrastructure.Persistence.Services;
 
 namespace SampleHouseInfo.Infrastructure.Persistence.Extensions
 {
@@ -18,7 +21,9 @@ namespace SampleHouseInfo.Infrastructure.Persistence.Extensions
     public static void RegisterPersistenceLayerServices(this IServiceCollection services)
     {
       services.AddTransient<IRoomsRepository, RoomsRepository>();
-      services.AddSingleton<IfcFileReader>();
+      services.AddTransient<IIfcXbimProvider, IfcXbimProvider>();
+      services.AddTransient<ISummaryService, SummaryService>();
+      services.AddSingleton<IfcXbimProvider>();
     }
 
   }

@@ -1,6 +1,6 @@
 ﻿using SampleHouseInfo.Application.Interfaces.Repositories;
 using SampleHouseInfo.Domain.Entities;
-using SampleHouseInfo.Infrastructure.Persistence.Utilities;
+using SampleHouseInfo.Infrastructure.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace SampleHouseInfo.Infrastructure.Persistence.Repository
     #region Fields
 
     private readonly IEnumerable<Room> _rooms;
-    private readonly IfcFileReader _ifcFileUtility;
+    private readonly IIfcXbimProvider _ifcProvider;
 
     #endregion
 
@@ -28,11 +28,12 @@ namespace SampleHouseInfo.Infrastructure.Persistence.Repository
     /// <summary>
     /// Initializes a new instance of the <see cref="RoomsRepository" /> class.
     /// </summary>
-    /// <param name="options">The options.</param>
-    public RoomsRepository(IfcFileReader ifcFileUtility)
+    /// <param name="ifcProvider">The ifc provider.</param>
+    public RoomsRepository(IIfcXbimProvider ifcProvider)
     {
-      _ifcFileUtility = ifcFileUtility;
-      _rooms = _ifcFileUtility.GetAll<IfcSpace, Room>((space) =>
+      _ifcProvider = ifcProvider;
+
+      _rooms = _ifcProvider.GetAllOfType<IfcSpace, Room>((space) =>
       {
         return new Room
         {
@@ -79,9 +80,9 @@ namespace SampleHouseInfo.Infrastructure.Persistence.Repository
       return await Task.Run(() => _rooms.Skip((pageNumber - 1) * pageSize)
                                         .Take(pageSize)
                                         .ToList());
-    } 
+    }
 
     #endregion
-  
+
   }
 }

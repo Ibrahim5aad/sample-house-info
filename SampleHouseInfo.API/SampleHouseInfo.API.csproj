@@ -9,11 +9,17 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="api-pub\**" />
 	  <Compile Remove="Logs\**" />
+	  <Content Remove="api-pub\**" />
 	  <Content Remove="Logs\**" />
 	  <EmbeddedResource Remove="Logs\**" />
+	  <None Remove="api-pub\**" />
 	  <None Remove="Logs\**" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Content Remove="aws-windows-deployment-manifest.json" />
+	</ItemGroup> 
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />

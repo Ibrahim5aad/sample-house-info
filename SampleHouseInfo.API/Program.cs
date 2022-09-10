@@ -5,8 +5,16 @@ using ILogger = Serilog.ILogger;
 
 namespace SampleHouseInfo.API;
 
+/// <summary>
+/// Class Program
+/// </summary>
 public class Program
 {
+
+  /// <summary>
+  /// Defines the entry point of the application.
+  /// </summary>
+  /// <param name="args">The arguments.</param>
   public static async Task Main(string[] args)
   {
     var configuration = GetConfiguration();
@@ -21,14 +29,20 @@ public class Program
   }
 
 
+  /// <summary>
+  /// Creates the host builder.
+  /// </summary>
+  /// <param name="args">The arguments.</param>
+  /// <returns></returns>
   private static IHostBuilder CreateHostBuilder(string[] args)
   {
     var hostBuilder = Host.CreateDefaultBuilder(args)
-            .UseSerilog()
-            .ConfigureWebHostDefaults(whb =>
-            {
-              whb.UseStartup<Startup>();
-            });
+                          .UseSerilog()
+                          .ConfigureWebHostDefaults(whb =>
+                          {
+                            whb.UseStartup<Startup>()
+                               .UseIISIntegration();
+                          });
     return hostBuilder;
   }
 

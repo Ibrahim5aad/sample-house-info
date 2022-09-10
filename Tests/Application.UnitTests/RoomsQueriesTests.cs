@@ -70,7 +70,7 @@ public class RoomsQueriesTests
   #region Tests
 
   [Test]
-  public async Task GetAllRoomsQuery()
+  public async Task GetAllRoomsQuery_ShouldReturnRoomsCountEqualToDummyRooms()
   {
 
     //Arrange
@@ -94,7 +94,7 @@ public class RoomsQueriesTests
 
 
   [Test]
-  public async Task GetRoomByIdQuery_ShouldReturnARoom()
+  public async Task GetRoomByIdQuery_GivenValidId_ShouldReturnTheRoomWithThisId()
   {
 
     //Arrange
@@ -104,7 +104,7 @@ public class RoomsQueriesTests
     var roomsRepoMock = new Mock<IRoomsRepository>();
 
     roomsRepoMock.Setup(r => r.GetByIdAsync(dummyId))
-                  .ReturnsAsync(_rooms[0]);
+                  .ReturnsAsync(_rooms.Find(r => r.Id == dummyId));
 
     var queryHandler = new GetRoomByIdQueryHandler
                               (roomsRepoMock.Object, _mapper);
@@ -121,7 +121,7 @@ public class RoomsQueriesTests
 
 
   [Test]
-  public async Task GetRoomByIdQuery_ShouldReturnNull()
+  public async Task GetRoomByIdQuery_GivenInvalidId_ShouldReturnNull()
   {
 
     //Arrange

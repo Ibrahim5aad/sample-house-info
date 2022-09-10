@@ -1,0 +1,15 @@
+{
+    "manifestVersion": 1,
+    "deployments": {
+        "aspNetCoreWeb": [
+        {
+            "name": "sample-house-info",
+            "parameters": {
+                "appBundle": "api.zip",
+                "iisPath": "/",
+                "iisWebSite": "Default Web Site"
+            }
+        }
+        ]
+    }
+}
