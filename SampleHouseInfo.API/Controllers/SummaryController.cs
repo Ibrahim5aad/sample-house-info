@@ -16,6 +16,7 @@ public class SummaryController : ControllerBase
 
   private IMediator _mediator;
 
+
   /// <summary>
   /// Initializes a new instance of the <see cref="RoomsController"/> class.
   /// </summary>
@@ -25,11 +26,10 @@ public class SummaryController : ControllerBase
   }
 
 
-
   /// <summary>
-  /// Gets this instance.
-  /// </summary>
-  /// <returns></returns>
+  /// Gets the instances count summary.
+  /// </summary> 
+  [HttpGet]
   [HttpGet("elementsCount")]
   public async Task<IActionResult> GetElementsCount()
   {

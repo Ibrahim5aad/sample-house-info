@@ -30,7 +30,7 @@ public class RoomsQueriesTests
   /// <summary>
   /// Setups this test fixture.
   /// </summary>
-  [SetUp]
+  [OneTimeSetUp]
   public void Setup()
   {
     SetupDummyRooms();

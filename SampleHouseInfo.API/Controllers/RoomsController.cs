@@ -16,6 +16,7 @@ public class RoomsController : ControllerBase
 
   private IMediator _mediator;
 
+
   /// <summary>
   /// Initializes a new instance of the <see cref="RoomsController"/> class.
   /// </summary>
@@ -28,7 +29,7 @@ public class RoomsController : ControllerBase
   /// <summary>
   /// Gets all rooms.
   /// </summary>
-  /// <returns>All values</returns>
+  /// <returns>All rooms</returns>
   [HttpGet]
   public async Task<IActionResult> Get()
   {
@@ -40,7 +41,6 @@ public class RoomsController : ControllerBase
   /// Gets a specified room by id.
   /// </summary>
   /// <param name="id">The id of the room.</param>
-  /// <returns></returns>
   [HttpGet("{id}")]
   public async Task<IActionResult> Get(string id)
   {

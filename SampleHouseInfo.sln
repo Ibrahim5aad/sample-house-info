@@ -24,9 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleHouseInfo.Infrastruct
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C1896DFD-48F9-4B8D-B4B3-64B9FC205CB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "Tests\Application.UnitTests\Application.UnitTests.csproj", "{C39A4A56-5C19-4182-B91A-5A345F65E5FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "Tests\Application.UnitTests\Application.UnitTests.csproj", "{C39A4A56-5C19-4182-B91A-5A345F65E5FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.UnitTests", "Tests\API.UnitTests\API.UnitTests.csproj", "{9E5B2B5A-3BED-45A6-97E1-AAE5CEE3BCEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.IntegrationTests", "Tests\API.UnitTests\API.IntegrationTests.csproj", "{9E5B2B5A-3BED-45A6-97E1-AAE5CEE3BCEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
