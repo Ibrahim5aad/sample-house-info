@@ -21,9 +21,8 @@ public static class ServiceCollectionExtensions
   /// <param name="services">The services.</param>
   public static void RegisterPersistenceLayerServices(this IServiceCollection services)
   {
-    services.AddTransient<IRoomsRepository, RoomsRepository>();
-    services.AddTransient<IIfcXbimProvider, IfcXbimProvider>();
-    services.AddTransient<ISummaryService, SummaryService>();
+    services.AddScoped<IRoomsRepository, RoomsRepository>();
+    services.AddScoped<ISummaryService, SummaryService>();
     services.AddSingleton<IfcXbimProvider>();
   }
 

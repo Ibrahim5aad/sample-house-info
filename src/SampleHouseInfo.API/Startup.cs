@@ -44,11 +44,9 @@ public class Startup
     Log.Information("Registering services into the IoC container...");
 
     services.Configure<AppSettings>(_config);
-
-    services.AddAuthentication();
+     
     services.AddControllers();
-    services.AddSwagger();
-    services.AddControllers();
+    services.AddSwagger(); 
 
     services.RegisterPersistenceLayerServices();
     services.RegisterApplicationLayerServices();
@@ -79,8 +77,7 @@ public class Startup
     app.UseCors();
     app.UseHttpsRedirection();
     app.UseRouting();
-    app.UseAuthentication();
-    app.UseAuthorization();
+
     app.UseSerilogRequestLogging();
     app.UseMiddleware<ErrorHandlerMiddleware>();
 
