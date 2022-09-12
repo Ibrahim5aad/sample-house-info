@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
   {
     services.AddScoped<IRoomsRepository, RoomsRepository>();
     services.AddScoped<ISummaryService, SummaryService>();
-    services.AddSingleton<IfcXbimProvider>();
+    services.AddSingleton<IIfcXbimProvider, IfcXbimProvider>();
   }
 
 }
