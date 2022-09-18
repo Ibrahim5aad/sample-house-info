@@ -4,14 +4,6 @@ public class Room : BaseEntity<string>
 {
 
   /// <summary>
-  /// Gets or sets the identifier.
-  /// </summary>
-  /// <value>
-  /// The identifier.
-  /// </value>
-  public string Id { get; set; }
-
-  /// <summary>
   /// Gets or sets the name.
   /// </summary>
   /// <value>
@@ -26,5 +18,7 @@ public class Room : BaseEntity<string>
   /// The area.
   /// </value>
   public double NetArea { get; set; }
+
+  public double GrossArea { get; set; }
 
 }

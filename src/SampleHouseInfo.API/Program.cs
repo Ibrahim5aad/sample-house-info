@@ -22,7 +22,7 @@ public class Program
 
     Log.Information("Configuring host...");
     var app = CreateHostBuilder(args).Build();
-
+    
     Log.Information("Starting host...");
     app.Run();
 

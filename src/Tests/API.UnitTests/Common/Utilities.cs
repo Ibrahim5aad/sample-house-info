@@ -2,17 +2,16 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace API.IntegrationTests.Common
+namespace API.IntegrationTests.Common;
+
+internal class Utilities
 {
-  internal class Utilities
-  {
-    public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
-    {
-      var stringResponse = await response.Content.ReadAsStringAsync();
+public static async Task<T> GetResponseContent<T>(HttpResponseMessage response)
+{
+  var stringResponse = await response.Content.ReadAsStringAsync();
 
-      var result = JsonConvert.DeserializeObject<T>(stringResponse);
+  var result = JsonConvert.DeserializeObject<T>(stringResponse);
 
-      return result;
-    }
-  }
+  return result;
+}
 }

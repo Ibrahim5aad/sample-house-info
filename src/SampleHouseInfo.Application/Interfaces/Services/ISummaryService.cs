@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SampleHouseInfo.Application.Interfaces
+namespace SampleHouseInfo.Application.Interfaces;
+
+public interface ISummaryService
 {
-  public interface ISummaryService
-  {
 
-    /// <summary>
-    /// Gets the elements count.
-    /// </summary>
-    /// <returns></returns>
-    Task<Dictionary<string, int>> GetElementsCountAsync();
+/// <summary>
+/// Gets the elements count.
+/// </summary>
+/// <returns></returns>
+Task<Dictionary<string, int>> GetElementsCountAsync();
 
-  }
 }
