@@ -7,6 +7,9 @@
   </PropertyGroup>
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<UserSecretsId>edd7efcf-2356-4d50-a987-c48c813d92c6</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="api-pub\**" />
@@ -21,6 +24,8 @@
 	  <Content Remove="aws-windows-deployment-manifest.json" />
 	</ItemGroup> 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />

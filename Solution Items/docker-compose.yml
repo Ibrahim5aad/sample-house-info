@@ -30,5 +30,26 @@ services:
     volumes:
       - ./localhost.pfx:/https/localhost.pfx:ro
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+
+  api:
+    build:
+      context: ../
+      dockerfile: src/SampleHouseInfo.API/Dockerfile
+    depends_on:
+      - identityserver
+    entrypoint: /bin/sh -c "update-ca-certificates && dotnet SampleHouseInfo.API.dll"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__PATH=/https/localhost.pfx 
+      - AUTHENTICATION__AUTHORITY=https://identityserver:7000
+      - AUTHENTICATION__AUDIENCE=f4595a7c-9ef8-4a14-8a58-b5e301e03738
+    ports:
+      - "7001:7001"
+    volumes:
+      - ./localhost.pfx:/https/localhost.pfx:ro
+      - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+
 volumes:
   db:

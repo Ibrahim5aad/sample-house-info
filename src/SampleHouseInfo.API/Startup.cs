@@ -1,4 +1,5 @@
-﻿using SampleHouseInfo.API.Extensions;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using SampleHouseInfo.API.Extensions;
 using SampleHouseInfo.API.Middlewares;
 using SampleHouseInfo.Application.Extensions;
 using SampleHouseInfo.Domain.Settings;
@@ -44,11 +45,44 @@ public class Startup
     Log.Information("Registering services into the IoC container...");
 
     services.Configure<AppSettings>(_config);
-     
+
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+              options.Authority = _config["Authentication:Authority"];
+              options.Audience = _config["Authentication:Audience"];
+
+              options.TokenValidationParameters.ValidateAudience = true;
+              options.TokenValidationParameters.ValidateIssuer = true;
+              options.TokenValidationParameters.ValidateIssuerSigningKey = true;
+
+            });
+
+    services.AddAuthorization(options =>
+    {
+      options.AddPolicy("ApiScope", policyBuilder =>
+      {
+        policyBuilder.RequireAuthenticatedUser()
+                      .RequireClaim("scope", "api");
+      });
+    });
+
     services.AddControllers();
-    services.AddSwagger(); 
+
+    services.AddCors(options =>
+    {
+      options.AddDefaultPolicy(builder =>
+      {
+        builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                 .AllowAnyHeader();
+      });
+    });
+
+    services.AddSwagger(_config);
 
     services.RegisterPersistenceLayerServices();
+
     services.RegisterApplicationLayerServices();
 
     Log.Information("services registered successfully.");
@@ -74,11 +108,19 @@ public class Startup
     }
 
     app.UseSwaggerAndSwaggerUI();
+
     app.UseCors();
+
     app.UseHttpsRedirection();
-    app.UseRouting();
+
+    app.UseRouting(); //route info should be available for authentication decision
+
+    app.UseAuthentication();
+
+    app.UseAuthorization();
 
     app.UseSerilogRequestLogging();
+
     app.UseMiddleware<ErrorHandlerMiddleware>();
 
     app.UseEndpoints(endpoints =>
