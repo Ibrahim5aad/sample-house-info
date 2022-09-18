@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   db:
+    container_name: identity-db
     environment:
       - POSTGRES_PASSWORD=password
     image: postgres:14
@@ -12,6 +13,7 @@ services:
       
 
   identityserver:
+    container_name: identityserver
     build:
       context: ../
       dockerfile: src/SampleHouseInfo.Infrastructure.Identity/Dockerfile
@@ -32,6 +34,7 @@ services:
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
 
   api:
+    container_name: api
     build:
       context: ../
       dockerfile: src/SampleHouseInfo.API/Dockerfile

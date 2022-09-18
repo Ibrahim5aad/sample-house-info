@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleHouseInfo.Application.Features.Queries;
 
@@ -9,6 +10,7 @@ namespace SampleHouseInfo.API.Controllers;
 /// Class RoomsController
 /// </summary>
 /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class RoomsController : ControllerBase
