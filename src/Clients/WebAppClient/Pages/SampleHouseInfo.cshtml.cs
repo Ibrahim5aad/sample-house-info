@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
+using WebAppClient.Models.Dtos;
 
 namespace WebAppClient.Pages
 {
@@ -28,13 +29,14 @@ namespace WebAppClient.Pages
     private IHttpClientFactory HttpClientFactory { get; }
 
 
+
     /// <summary>
-    /// Gets or sets the data.
+    /// Gets or sets the rooms.
     /// </summary>
     /// <value>
-    /// The data.
+    /// The rooms.
     /// </value>
-    public string? Data { get; set; }
+    public IEnumerable<RoomDto>? Rooms { get; set; }
 
 
     /// <summary>
@@ -49,8 +51,9 @@ namespace WebAppClient.Pages
       httpClient.DefaultRequestHeaders.Authorization
         = new AuthenticationHeaderValue(scheme: "Bearer", await HttpContext.GetTokenAsync("access_token"));
 
-      Data = await httpClient.GetStringAsync("rooms");
+      Rooms = await httpClient.GetFromJsonAsync<IEnumerable<RoomDto>>("rooms");
 
+       
     }
   }
 }

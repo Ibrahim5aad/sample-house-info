@@ -2,11 +2,28 @@
 @model SampleHouseInfoModel
 @{
     ViewData["Title"] = "API";
-
 }
 
-<pre>
-  <code>
-    @Model.Data
-  </code>
-</pre>
+<div >
+    <br />
+<div>
+    <table >
+              
+    @foreach (var room in Model.Rooms)
+    {
+      <tr>  
+          <td>  
+            @Html.DisplayFor(m => room.Name)  
+          </td>  
+          <td>  
+            @Html.DisplayFor(m => room.Id)  
+          </td>  
+          <td>  
+            @Html.DisplayFor(m => room.Area)  
+          </td>
+      </tr>   
+    }
+
+  </table>
+  </div>
+</div>
