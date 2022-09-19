@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{1645
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "src\Clients\ConsoleClient\ConsoleClient.csproj", "{0DD3AD78-8B00-441B-B8BA-185A50681046}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppClient", "src\Clients\WebAppClient\WebAppClient.csproj", "{CF60C969-6250-44E7-9860-085123D3F868}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{0DD3AD78-8B00-441B-B8BA-185A50681046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DD3AD78-8B00-441B-B8BA-185A50681046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD3AD78-8B00-441B-B8BA-185A50681046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF60C969-6250-44E7-9860-085123D3F868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF60C969-6250-44E7-9860-085123D3F868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF60C969-6250-44E7-9860-085123D3F868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF60C969-6250-44E7-9860-085123D3F868}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{9E5B2B5A-3BED-45A6-97E1-AAE5CEE3BCEB} = {C1896DFD-48F9-4B8D-B4B3-64B9FC205CB3}
 		{1027A3D2-7D44-4625-8FBF-83B4C3831750} = {61CB1950-CF80-4363-A246-65AA5B7983B7}
 		{0DD3AD78-8B00-441B-B8BA-185A50681046} = {16459D79-3C16-4833-8EAE-333F184208A9}
+		{CF60C969-6250-44E7-9860-085123D3F868} = {16459D79-3C16-4833-8EAE-333F184208A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {62B39D70-F708-452D-8883-5EE9E34A0C3D}

@@ -8,7 +8,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
   /// 
   /// </summary>
   public class ApplicationDbContextSeed
-  { 
+  {
 
     private readonly static IPasswordHasher<ApplicationUser> _passwordHasher =
                                                  new PasswordHasher<ApplicationUser>();
@@ -19,7 +19,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
       int retryForAvaiability = retry ?? 0;
 
       try
-      { 
+      {
         if (!await context.Roles.AnyAsync())
         {
           context.Roles.AddRange(GetDefaultRoles());
@@ -27,9 +27,10 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
         }
         if (!await context.Users.AnyAsync())
         {
-          context.Users.AddRange(GetDefaultUser());
+          var user = GetDefaultUser();
+          context.Users.AddRange(user);
           await context.SaveChangesAsync();
-          await AssignRolesToUser(services, "admin@sanveo.com", new[] { Roles.SuperAdmin });
+          await AssignRolesToUser(services, user.First().Email, new[] { Roles.SuperAdmin });
         }
       }
       catch (Exception)
@@ -107,11 +108,13 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
     public static async Task<IdentityResult> AssignRolesToUser
           (IServiceProvider services, string userEmail, string[] roles)
     {
-      UserManager<ApplicationUser> _userManager =
-              services.GetService<UserManager<ApplicationUser>>()!;
+      using var scope = services.CreateScope();
 
-      ApplicationUser user = await _userManager.FindByEmailAsync(userEmail);
-      return await _userManager.AddToRolesAsync(user, roles);
+      UserManager<ApplicationUser> userManager =
+              scope.ServiceProvider.GetService<UserManager<ApplicationUser>>()!;
+
+      ApplicationUser user = await userManager.FindByEmailAsync(userEmail);
+      return await userManager.AddToRolesAsync(user, roles);
     }
 
   }

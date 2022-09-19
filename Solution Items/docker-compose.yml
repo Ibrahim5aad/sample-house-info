@@ -61,6 +61,7 @@ services:
       dockerfile: src/Clients/ConsoleClient/Dockerfile
     depends_on:
       - api
+      - identityserver
     entrypoint: /bin/sh -c "update-ca-certificates && dotnet ConsoleClient.dll"
     environment:
       - AUTHENTICATION__AUTHORITY=https://identityserver:7000
@@ -69,5 +70,27 @@ services:
     volumes:
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
 
+  webapplication:
+    container_name: web-app-client
+    build:
+      context: ../
+      dockerfile: src/Clients/WebAppClient/Dockerfile
+    depends_on:
+      - api
+      - identityserver
+    entrypoint: /bin/sh -c "update-ca-certificates && dotnet WebAppClient.dll"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7002
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__PATH=/https/localhost.pfx 
+      - AUTHENTICATION__AUTHORITY=https://identityserver:7000
+      - AUTHENTICATION__CLIENTID=f56ea058-976e-4826-ae47-b1bd71c25d54
+      - AUTHENTICATION__CLIENTSECRET=secret
+    ports:
+      - "7002:7002"
+    volumes:
+      - ./localhost.pfx:/https/localhost.pfx:ro
+      - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
 volumes:
   db:
