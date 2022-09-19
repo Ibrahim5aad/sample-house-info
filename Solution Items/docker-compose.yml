@@ -54,5 +54,20 @@ services:
       - ./localhost.pfx:/https/localhost.pfx:ro
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
 
+  consoleapp:
+    container_name: console-client
+    build:
+      context: ../
+      dockerfile: src/Clients/ConsoleClient/Dockerfile
+    depends_on:
+      - api
+    entrypoint: /bin/sh -c "update-ca-certificates && dotnet ConsoleClient.dll"
+    environment:
+      - AUTHENTICATION__AUTHORITY=https://identityserver:7000
+      - AUTHENTICATION__CLIENTID=b54fcfd3-d043-467d-aa92-e8079d5a0980
+      - AUTHENTICATION__CLIENTSECRET=secret
+    volumes:
+      - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+
 volumes:
   db:
