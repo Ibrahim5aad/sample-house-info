@@ -11,7 +11,6 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       
-
   identityserver:
     container_name: identityserver
     build:
@@ -65,7 +64,7 @@ services:
     entrypoint: /bin/sh -c "update-ca-certificates && dotnet ConsoleClient.dll"
     environment:
       - AUTHENTICATION__AUTHORITY=https://identityserver:7000
-      - AUTHENTICATION__CLIENTID=b54fcfd3-d043-467d-aa92-e8079d5a0980
+      - AUTHENTICATION__CLIENTID=console-client-id
       - AUTHENTICATION__CLIENTSECRET=secret
     volumes:
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
@@ -85,12 +84,26 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__PATH=/https/localhost.pfx 
       - AUTHENTICATION__AUTHORITY=https://identityserver:7000
-      - AUTHENTICATION__CLIENTID=f56ea058-976e-4826-ae47-b1bd71c25d54
+      - AUTHENTICATION__CLIENTID=webapp-client-id
       - AUTHENTICATION__CLIENTSECRET=secret
     ports:
       - "7002:7002"
     volumes:
       - ./localhost.pfx:/https/localhost.pfx:ro
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+
+  singlepageapplication:
+    container_name: spa-client
+    build:
+      context: ../
+      dockerfile: src/Clients/SPAClient/Dockerfile
+    depends_on:
+      - api
+      - identityserver
+    ports:
+      - "7003:7003"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro
+
 volumes:
   db:

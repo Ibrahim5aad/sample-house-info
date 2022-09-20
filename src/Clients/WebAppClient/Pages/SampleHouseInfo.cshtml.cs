@@ -44,16 +44,14 @@ namespace WebAppClient.Pages
     /// </summary>
     public async Task OnGetAsync()
     {
-      using var httpClient = HttpClientFactory.CreateClient();
-
-      httpClient.BaseAddress = new Uri("https://api:7001/api/");
+      using var httpClient = HttpClientFactory.CreateClient("Api");
 
       httpClient.DefaultRequestHeaders.Authorization
         = new AuthenticationHeaderValue(scheme: "Bearer", await HttpContext.GetTokenAsync("access_token"));
 
       Rooms = await httpClient.GetFromJsonAsync<IEnumerable<RoomDto>>("rooms");
 
-       
+
     }
   }
 }

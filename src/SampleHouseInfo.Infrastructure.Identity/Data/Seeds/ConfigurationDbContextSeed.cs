@@ -34,7 +34,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
                   (GetApiScopes().Select(r => r.ToEntity()));
 
           await context.SaveChangesAsync();
-        }
+        } 
 
         if (!await context.Clients.AnyAsync())
         {
@@ -107,7 +107,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
       {
         new Client
         {
-          ClientId = Guid.NewGuid().ToString(),
+          ClientId = "console-client-id",
           ClientSecrets = new List<Secret>{new ("secret".Sha512())},
           ClientName = "Console Application",
           AllowedScopes = new List<string> { "api" },
@@ -117,7 +117,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
         },
         new Client
         {
-          ClientId = Guid.NewGuid().ToString(),
+          ClientId = "webapp-client-id",
           ClientSecrets = new List<Secret>{new ("secret".Sha512())},
           ClientName = "Web Application",
           AllowedGrantTypes = GrantTypes.Code,
@@ -133,7 +133,7 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
         },
         new Client
         {
-          ClientId = Guid.NewGuid().ToString(),
+          ClientId = "spa-client-id",
           RequireClientSecret = false,
           ClientName = "SPA",
           AllowedGrantTypes = GrantTypes.Code,
@@ -144,9 +144,9 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
             StandardScopes.Email,
             "api"
           },
-          AllowedCorsOrigins = new List<string> { "https://singlepageapplication:7003" },
-          RedirectUris = new List<string>{ "https://singlepageapplication:7003/authentication/login-callback" },
-          PostLogoutRedirectUris = new List<string>{ "https://singlepageapplication:7003/authentication/logout-callback" }
+          AllowedCorsOrigins = new List<string> { "http://singlepageapplication:7003" },
+          RedirectUris = new List<string>{ "http://singlepageapplication:7003/authentication/login-callback" },
+          PostLogoutRedirectUris = new List<string>{ "http://singlepageapplication:7003/authentication/logout-callback" }
         },
       };
     }

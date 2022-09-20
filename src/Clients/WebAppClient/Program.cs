@@ -25,7 +25,10 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("Api", client =>
+{
+  client.BaseAddress = new Uri("https://api:7001/api/");
+});
 
 builder.Services.AddRazorPages();
 

@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Authorization
+
+@page "/fetchdata"
+@attribute [Authorize]
+@inject IHttpClientFactory httpClientFactory
+
+<PageTitle>Sample House</PageTitle>
+
+<h1>Sample House Info</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (rooms == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in rooms)
+            {
+                <tr>
+                    <td>@room.Id</td>
+                    <td>@room.Name</td>
+                    <td>@room.Area</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private RoomDto[]? rooms;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var httpClient = httpClientFactory.CreateClient("Api");
+        rooms = await httpClient.GetFromJsonAsync<RoomDto[]>("rooms");
+    }
+
+    public class RoomDto
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+        
+        public double Area { get; set; }
+    }
+}
