@@ -10,7 +10,7 @@ namespace SampleHouseInfo.API.Controllers;
 /// Class RoomsController
 /// </summary>
 /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
-[Authorize]
+[Authorize("ApiScope")]
 [Route("api/[controller]")]
 [ApiController]
 public class RoomsController : ControllerBase

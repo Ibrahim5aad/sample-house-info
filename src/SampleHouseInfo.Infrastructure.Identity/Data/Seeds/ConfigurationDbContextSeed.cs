@@ -2,7 +2,6 @@
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
@@ -20,30 +19,29 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
 
       try
       {
+         
         if (!await context.ApiResources.AnyAsync())
         {
           await context.ApiResources.AddRangeAsync
                   (GetApiResources().Select(r => r.ToEntity()));
 
           await context.SaveChangesAsync();
-        }
-
+        } 
         if (!await context.ApiScopes.AnyAsync())
         {
           await context.ApiScopes.AddRangeAsync
                   (GetApiScopes().Select(r => r.ToEntity()));
 
           await context.SaveChangesAsync();
-        } 
-
+        }
+         
         if (!await context.Clients.AnyAsync())
         {
           await context.Clients.AddRangeAsync
                   (GetClients().Select(r => r.ToEntity()));
 
           await context.SaveChangesAsync();
-        }
-
+        } 
         if (!await context.IdentityResources.AnyAsync())
         {
           await context.IdentityResources.AddRangeAsync
@@ -92,6 +90,11 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
         {
           Name = "api",
           DisplayName = "API"
+        },
+        new ApiScope
+        {
+          Name = "summaryapi",
+          DisplayName = "SummaryAPI"
         }
       };
     }
@@ -142,7 +145,8 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
             StandardScopes.OpenId,
             StandardScopes.Profile,
             StandardScopes.Email,
-            "api"
+            //"api",
+            "summaryapi"
           },
           AllowedCorsOrigins = new List<string> { "http://singlepageapplication:7003" },
           RedirectUris = new List<string>{ "http://singlepageapplication:7003/authentication/login-callback" },
@@ -162,10 +166,16 @@ namespace SampleHouseInfo.Infrastructure.Identity.Data.Seeds
       {
         new ApiResource
         {
-          Name = Guid.NewGuid().ToString(),
+          Name = "RoomsApi",
           DisplayName = "API",
           Scopes = new List<string>{ "api" }
-        }
+        },
+        new ApiResource
+        {
+          Name = "SummaryApi",
+          DisplayName = "SummaryAPI",
+          Scopes = new List<string>{ "summaryapi" }
+        },
       };
     }
 

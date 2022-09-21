@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Authorization
+
+@page "/fetchsummarydata"
+@attribute [Authorize]
+@inject IHttpClientFactory httpClientFactory
+
+<PageTitle>Sample House</PageTitle>
+
+<h1>Sample House Info</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (summary == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in summary)
+            {
+                <tr>
+                    <td>@item.Key</td>
+                    <td>@item.Value</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Dictionary<string, int> summary;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var httpClient = httpClientFactory.CreateClient("Api");
+        summary = await httpClient.GetFromJsonAsync<Dictionary<string, int>>("summary");
+    }
+
+    
+}

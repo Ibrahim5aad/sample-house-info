@@ -17,7 +17,7 @@ builder.Services.AddOidcAuthentication(options =>
   options.ProviderOptions.Authority = builder.Configuration["Authentication:Authority"];
   options.ProviderOptions.ClientId = builder.Configuration["Authentication:ClientId"];
   options.ProviderOptions.ResponseType = "code";
-  options.ProviderOptions.DefaultScopes.Add("api");
+  options.ProviderOptions.DefaultScopes.Add("summaryapi");
 
 });
 

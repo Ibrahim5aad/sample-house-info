@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleHouseInfo.Application.Features.Queries;
 
@@ -10,6 +11,7 @@ namespace SampleHouseInfo.API.Controllers;
 /// </summary>
 /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
 [Route("api/[controller]")]
+[Authorize("SummaryApiScope")]
 [ApiController]
 public class SummaryController : ControllerBase
 {

@@ -18,7 +18,7 @@ namespace SPAClient.Handlers
         "https://api:7001"
       }, new List<string>
       {
-        "api"
+        "summaryapi",
       });
 
     }

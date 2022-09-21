@@ -46,7 +46,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__PATH=/https/localhost.pfx 
       - AUTHENTICATION__AUTHORITY=https://identityserver:7000
-      - AUTHENTICATION__AUDIENCE=f4595a7c-9ef8-4a14-8a58-b5e301e03738
+      - AUTHENTICATION__AUDIENCE=RoomsApi
     ports:
       - "7001:7001"
     volumes:

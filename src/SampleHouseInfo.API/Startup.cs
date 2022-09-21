@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using SampleHouseInfo.API.Extensions;
 using SampleHouseInfo.API.Middlewares;
 using SampleHouseInfo.Application.Extensions;
@@ -50,7 +51,12 @@ public class Startup
             .AddJwtBearer(options =>
             {
               options.Authority = _config["Authentication:Authority"];
-              options.Audience = _config["Authentication:Audience"];
+
+              options.TokenValidationParameters.ValidAudiences = new List<string>()
+              {
+                "SummaryApi",
+                "RoomsApi"
+              };
 
               options.TokenValidationParameters.ValidateAudience = true;
               options.TokenValidationParameters.ValidateIssuer = true;
@@ -65,6 +71,13 @@ public class Startup
         policyBuilder.RequireAuthenticatedUser()
                       .RequireClaim("scope", "api");
       });
+
+      options.AddPolicy("SummaryApiScope", policyBuilder =>
+      {
+        policyBuilder.RequireAuthenticatedUser()
+                      .RequireClaim("scope", "summaryapi");
+      });
+
     });
 
     services.AddControllers();
