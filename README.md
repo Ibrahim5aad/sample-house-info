@@ -7,7 +7,7 @@
 
 # Description
 
-This .NET Core solution demonstrates the a clean architectured WebAPI that is protected with IdentityServer and consumed by three different clients:
+This .NET Core solution demonstrates a clean architectured WebAPI that is protected with IdentityServer service and consumed by three different clients:
  1. Console App, uses client credential flow.
  2. Server-side ASP.NET Core web application, uses authorization code flow.
  3  SPA ASP.NET Core Blazor WASM, uses PKCE flow
