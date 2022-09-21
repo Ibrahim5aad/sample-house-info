@@ -16,10 +16,18 @@ This .NET Core solution demonstrates a clean architectured WebAPI that is protec
 
 1. Generate a self-signed certificate with a new private key.
     ```shell
-    openssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.crt -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,DNS:api,DNS:identityserver,DNS:singlepageapplication,DNS:webapplication"
+    openssl req -x509 \
+     -newkey rsa:4096 -keyout localhost.key \
+     -out localhost.crt \
+     -subj "/CN=localhost" \
+     -addext "subjectAltName=DNS:localhost,DNS:api,DNS:identityserver,DNS:singlepageapplication,DNS:webapplication"
     ```
     ```shell
-    openssl pkcs12 -export -in localhost.crt -inkey localhost.key -out localhost.pfx -name "Creating an IdentityServer 6 Solution"
+    openssl pkcs12 -export \
+       -in localhost.crt \
+       -inkey localhost.key \
+       -out localhost.pfx \
+       -name "Creating an IdentityServer 6 Solution"
     ```
 2. Import the self-signed certificate.
     ```shell
