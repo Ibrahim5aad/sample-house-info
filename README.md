@@ -40,7 +40,7 @@ This .NET Core solution demonstrates a clean architectured WebAPI that is protec
     127.0.0.1 singlepageapplication
     127.0.0.1 webapplication
     ```
-4. Run the service containers.
+4. Open the console in the "Solution Items" folder and run the service containers.
     ```shell
     docker compose up --build
     ```
